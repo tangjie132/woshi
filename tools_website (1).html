@@ -1,0 +1,2377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优质工具商城 - 专业工具一站式购买</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        /* 头部导航 */
+        .header {
+            display: none;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .cart-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e53e3e;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 主要内容 */
+        .main {
+            margin-top: 0;
+            padding: 1rem 0;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* 产品网格 */
+        .products-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            border-left: 4px solid #667eea;
+        }
+
+        .product-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 25px rgba(102, 126, 234, 0.15);
+            border-left-color: #5a67d8;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 2rem;
+        }
+
+        .add-to-cart {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .add-to-cart:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 控制面板样式 */
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .sort-module, .latest-module {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sort-module h3, .latest-module h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .sort-btn {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            color: #666;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .sort-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .sort-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .latest-tools {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .latest-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #48bb78;
+            transition: all 0.3s ease;
+        }
+
+        .latest-item:hover {
+            background: #e6fffa;
+            transform: translateX(3px);
+        }
+
+        .latest-item-info {
+            flex: 1;
+        }
+
+        .latest-item-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .latest-item-date {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .latest-item-price {
+            font-weight: bold;
+            color: #48bb78;
+            font-size: 0.9rem;
+        }
+
+        /* 购物车区域样式 */
+        .cart-section {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: #666;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .lang-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn {
+            background: #48bb78;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .login-btn.logged-in {
+            background: #ed8936;
+        }
+
+        .login-btn.logged-in:hover {
+            background: #dd6b20;
+        }
+
+        .admin-btn {
+            background: #9f7aea;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: #805ad5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(159, 122, 234, 0.4);
+        }
+
+        /* 购物车模态框 */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .cart-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 1rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 1rem;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-item {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f0f2f5;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        /* 登录模态框样式 */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .login-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 1rem;
+        }
+
+        .close-login {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-submit {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .login-submit:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 支付模态框样式 */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .payment-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 1rem;
+        }
+
+        .close-payment {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .payment-amount {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-amount h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .payment-address h4, .qr-code h4, .payment-instructions h4 {
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .address-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .address-container input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+        }
+
+        .copy-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #38a169;
+        }
+
+        .qr-code {
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-display {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .qr-display img {
+            display: block;
+            margin: 0 auto 0.5rem auto;
+        }
+
+        .qr-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .qr-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-instructions {
+            background: #fffbeb;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-instructions ol {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .payment-instructions li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .payment-confirm-btn {
+            flex: 1;
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .payment-confirm-btn:hover {
+            background: #38a169;
+        }
+
+        .payment-cancel-btn {
+            flex: 1;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .payment-cancel-btn:hover {
+            background: #c53030;
+        }
+
+        .payment-status {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-status h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-status p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: loading 2s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* 管理后台样式 */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .admin-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 95%;
+            max-width: 1000px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 1rem;
+        }
+
+        .close-admin {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-tab {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            color: #666;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .admin-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .admin-actions {
+            margin-bottom: 1.5rem;
+        }
+
+        .add-product-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-product-btn:hover {
+            background: #38a169;
+        }
+
+        .products-table, .users-table, .orders-table {
+            overflow-x: auto;
+        }
+
+        .products-table table, .users-table table, .orders-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-table th, .users-table th, .orders-table th,
+        .products-table td, .users-table td, .orders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .products-table th, .users-table th, .orders-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .edit-btn, .delete-btn, .view-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #5a67d8;
+        }
+
+        .delete-btn {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c53030;
+        }
+
+        .view-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #38a169;
+        }
+
+        /* 添加产品弹窗 */
+        .add-product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2100;
+        }
+
+        .add-product-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .add-product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 1rem;
+        }
+
+        .close-add-product {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .add-product-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            flex: 1;
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #38a169;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            background: #e2e8f0;
+            color: #666;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e0;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products-section {
+                padding: 2rem 1rem;
+            }
+
+            .product-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .product-price {
+                margin-right: 0;
+            }
+
+            .add-to-cart {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .control-panel {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .sort-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">🔧 优质工具</a>
+                <ul class="nav-links">
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 购物车
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="main">
+        <div class="container">
+            <!-- 英雄区域 -->
+            <section class="hero" id="home">
+            </section>
+
+            <!-- 产品展示 -->
+            <section class="products-section" id="products">
+                <!-- 购物车按钮 -->
+                <div class="cart-section">
+                    <div class="language-selector">
+                        <button class="lang-btn active" onclick="switchLanguage('zh')" id="zhBtn">
+                            🇨🇳 中文
+                        </button>
+                        <button class="lang-btn" onclick="switchLanguage('en')" id="enBtn">
+                            🇺🇸 English
+                        </button>
+                    </div>
+                    <button class="login-btn" onclick="toggleLogin()" id="loginBtn">
+                        👤 登录
+                    </button>
+                    <button class="cart-btn" onclick="toggleCart()">
+                        🛒 购物车
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+                
+                <!-- 控制面板 -->
+                <div class="control-panel">
+                    <!-- 排序模块 -->
+                    <div class="sort-module">
+                        <h3>全部工具排序</h3>
+                        <div class="sort-buttons">
+                            <button class="sort-btn active" onclick="sortProducts('time')">按上架时间</button>
+                            <button class="sort-btn" onclick="sortProducts('sales')">按销量排序</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 最新上架模块 -->
+                    <div class="latest-module">
+                        <h3>最新上架工具</h3>
+                        <div class="latest-tools" id="latestTools">
+                            <!-- 最新工具将动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsGrid">
+                    <!-- 产品将通过JavaScript动态生成 -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="login-header">
+                <h2>用户登录</h2>
+                <button class="close-login" onclick="toggleLogin()">✕</button>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" required placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" required placeholder="请输入密码">
+                </div>
+                <button type="submit" class="login-submit">登录</button>
+                <div class="login-footer">
+                    <a href="#" onclick="showRegister()">没有账户？注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>购物车</h2>
+                <button class="close-cart" onclick="toggleCart()">✕</button>
+            </div>
+            <div id="cartItems">
+                <!-- 购物车商品将动态生成 -->
+            </div>
+            <div class="cart-total">
+                <div class="total-amount">总计: ¥<span id="totalAmount">0</span></div>
+                <button class="checkout-btn" onclick="checkout()">立即结账</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理后台模态框 -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>管理后台</h2>
+                <button class="close-admin" onclick="toggleAdmin()">✕</button>
+            </div>
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="showAdminTab('products')">产品管理</button>
+                <button class="admin-tab" onclick="showAdminTab('users')">用户管理</button>
+                <button class="admin-tab" onclick="showAdminTab('orders')">订单管理</button>
+            </div>
+            
+            <!-- 产品管理 -->
+            <div class="admin-panel" id="adminProducts">
+                <div class="admin-actions">
+                    <button class="add-product-btn" onclick="showAddProduct()">+ 添加新产品</button>
+                </div>
+                <div class="products-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>产品名称</th>
+                                <th>价格</th>
+                                <th>销量</th>
+                                <th>类别</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProductsList">
+                            <!-- 产品列表将动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 用户管理 -->
+            <div class="admin-panel" id="adminUsers" style="display: none;">
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>注册时间</th>
+                                <th>订单数</th>
+                                <th>总消费</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersList">
+                            <!-- 用户列表将动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 订单管理 -->
+            <div class="admin-panel" id="adminOrders" style="display: none;">
+                <div class="orders-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>用户</th>
+                                <th>金额</th>
+                                <th>时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersList">
+                            <!-- 订单列表将动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加产品弹窗 -->
+    <div class="add-product-modal" id="addProductModal">
+        <div class="add-product-content">
+            <div class="add-product-header">
+                <h2>添加新产品</h2>
+                <button class="close-add-product" onclick="closeAddProduct()">✕</button>
+            </div>
+            <form class="add-product-form" onsubmit="addNewProduct(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">产品名称</label>
+                        <input type="text" id="productName" required placeholder="请输入产品名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">价格 ($)</label>
+                        <input type="number" id="productPrice" required placeholder="0" min="0" step="0.01">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">产品描述</label>
+                    <textarea id="productDescription" required placeholder="请输入产品描述"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">产品类别</label>
+                        <select id="productCategory" required>
+                            <option value="">选择类别</option>
+                            <option value="电动工具">电动工具</option>
+                            <option value="手工工具">手工工具</option>
+                            <option value="焊接工具">焊接工具</option>
+                            <option value="园艺工具">园艺工具</option>
+                            <option value="汽修工具">汽修工具</option>
+                            <option value="木工工具">木工工具</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSales">初始销量</label>
+                        <input type="number" id="productSales" value="0" min="0">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">添加产品</button>
+                    <button type="button" class="cancel-btn" onclick="closeAddProduct()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h2>USDT支付</h2>
+                <button class="close-payment" onclick="closePayment()">✕</button>
+            </div>
+            <div class="payment-info">
+                <div class="payment-amount">
+                    <h3>支付金额: $<span id="paymentAmount">0</span> USDT</h3>
+                </div>
+                <div class="payment-address">
+                    <h4>Tron (TRC20) 收款地址:</h4>
+                    <div class="address-container">
+                        <input type="text" id="walletAddress" value="TCWM37F6gdyyWpv1NkPe8GuoKEGbuLaSmS" readonly>
+                        <button class="copy-btn" onclick="copyAddress()">复制</button>
+                    </div>
+                </div>
+                <div class="qr-code">
+                    <h4>扫描二维码支付:</h4>
+                    <div class="qr-display">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbgAAAG4CAIAAACgv9hIAAAABHNCSVQICAgIfAhkiAAAABl0RVh0U29mdHdhcmUAZ25vbWUtc2NyZWVuc2hvdO8Df+4AACAASURBVHic7N0JdBPV/gfw75lMJm3SNukKXQsttNCytoiyiOyyyA+VRRYVeIDyEBEXXkVFF3zwfohPfSoqLiiLqLjwBB8/RUF2UJAqSymlLZRSytqlSdsmzSSZ/38YqXTLJE1mdybf/0Ca3LmZZu43957cO0M45wQAANCbKfQeAAAA0AcICgAA3YOQAACAB2SY3+N6v6GN6SxXnBVSJSCZPWfqKPWeBFopbmnhNOaM3qNog3ztCKYP8LUj2vucMQA/wlBLRr3LAACgZaA7CgBAd6E7CgAAhgC9IwAAdA9CBAAAndAyIjvtNJY9lHrGhNfmqEckbkX4geCX1D6oukdWVOm7+/wWAMCXcM7bfdkgGOZbFl5cOH7W5YN4Y4vmFI9TJ8QwQlgzGyzP3L3rw/fz/1E4b4u6r0f1Z3cB3h9tI4qAjZ5YQzDIUyqE+dZRbmvlKKTBYJvjQUgwNL66HeTt6C1PHJl7aN/+qV/kFyuvFaEJVhqJ9BtRJMQ/fUfvobw8uuHHE5XpoxM4wdEpJqYO6rJgzO0vP8yJ+kZg6V0aqUdFSBGqM84bkhKdOFhOOcsVZxXJhw+MHnJhJxj8FBOeGm7q2bFzr3YhYZCXr1aF5Kik++E3t8yZJLewwvMcUP2JAqDAISb2vnlqhGWGJiMpJGjksKgbB6VFhKqzT1ZZ6vXeEa8RYkFIhFGz0OdmOeesr1NzyiBYREJsGhwM/gTJP73kFx6O2NKCfwROPYlGFAEdMTGaJOeYtNwL5qy1xXUNhmb3xkUiIiYU7xpGb0hNYZzzi1VnfjxzLK+2XIKRZUZ6QCKm4ZyTeqP2xLkqu7vfhZBIpLEbTLe//Rji7+29Zk3s+bMZo34SLM4/xrQ8bNJrlGnO4YcGzIGZE/0dCwAAgD+gqikDAAAdBiILAAD0hbLgAABA5ygLDgAAdI6y4AAAAFT4H6WZnP4K1SAAAABJRU5ErkJggg==" 
+                             alt="USDT TRC20 QR Code" 
+                             style="width: 200px; height: 200px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <p>请使用支持TRC20的钱包扫描</p>
+                    </div>
+                </div>
+                <div class="payment-instructions">
+                    <h4>支付说明:</h4>
+                    <ol>
+                        <li>请确保使用Tron网络(TRC20)转账</li>
+                        <li>转账金额必须完全匹配: <strong>$<span id="exactAmount">0</span> USDT</strong></li>
+                        <li>转账完成后，请点击下方"我已完成支付"按钮</li>
+                        <li>我们将在1-3个区块确认后处理您的订单</li>
+                    </ol>
+                </div>
+                <div class="payment-actions">
+                    <button class="payment-confirm-btn" onclick="confirmPayment()">我已完成支付</button>
+                    <button class="payment-cancel-btn" onclick="closePayment()">取消支付</button>
+                </div>
+            </div>
+            <div class="payment-status" id="paymentStatus" style="display: none;">
+                <div class="status-icon">⏳</div>
+                <h3>等待支付确认...</h3>
+                <p>正在监听区块链交易，请稍候</p>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 优质工具商城. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 产品数据
+        const products = [
+            // 电动工具类
+            {
+                id: 1,
+                name: "电动螺丝刀套装",
+                description: "专业级电动螺丝刀 - 多种规格螺丝刀头，适用于各种维修场景",
+                price: 299,
+                uploadTime: new Date('2025-01-15'),
+                sales: 156,
+                category: "电动工具"
+            },
+            {
+                id: 2,
+                name: "多功能电钻",
+                description: "高功率电钻 - 钻孔、螺丝锁定等多种功能，家装必备工具",
+                price: 458,
+                uploadTime: new Date('2025-01-20'),
+                sales: 203,
+                category: "电动工具"
+            },
+            {
+                id: 3,
+                name: "电动角磨机",
+                description: "大功率角磨机 - 切割、打磨、抛光多功能，金属加工利器",
+                price: 385,
+                uploadTime: new Date('2025-02-18'),
+                sales: 142,
+                category: "电动工具"
+            },
+            {
+                id: 4,
+                name: "电动圆锯",
+                description: "精密圆锯 - 木材切割专用，切面平整，效率高",
+                price: 520,
+                uploadTime: new Date('2025-02-12'),
+                sales: 89,
+                category: "电动工具"
+            },
+            {
+                id: 5,
+                name: "电动砂光机",
+                description: "振动砂光机 - 表面打磨抛光，木工装修必备",
+                price: 265,
+                uploadTime: new Date('2025-02-08'),
+                sales: 167,
+                category: "电动工具"
+            },
+            
+            // 手工工具类
+            {
+                id: 6,
+                name: "精密测量工具组",
+                description: "精密测量工具 - 卷尺、水平仪、角度尺等，确保施工精度",
+                price: 156,
+                uploadTime: new Date('2025-01-25'),
+                sales: 89,
+                category: "手工工具"
+            },
+            {
+                id: 7,
+                name: "手工工具套装",
+                description: "手工工具套装 - 锤子、扳手、钳子等常用工具，质量可靠",
+                price: 188,
+                uploadTime: new Date('2025-02-01'),
+                sales: 134,
+                category: "手工工具"
+            },
+            {
+                id: 8,
+                name: "螺丝刀套装",
+                description: "多规格螺丝刀 - 十字、一字、内六角等多种规格，维修必备",
+                price: 78,
+                uploadTime: new Date('2025-02-14'),
+                sales: 245,
+                category: "手工工具"
+            },
+            {
+                id: 9,
+                name: "扳手套装",
+                description: "开口扳手套装 - 8-24mm全套规格，机械维修专用",
+                price: 125,
+                uploadTime: new Date('2025-02-16'),
+                sales: 198,
+                category: "手工工具"
+            },
+            {
+                id: 10,
+                name: "精密钳子套装",
+                description: "多功能钳子 - 尖嘴钳、断线钳、剥线钳等，电工专用",
+                price: 145,
+                uploadTime: new Date('2025-02-19'),
+                sales: 156,
+                category: "手工工具"
+            },
+            
+            // 焊接工具类
+            {
+                id: 11,
+                name: "电焊工具包",
+                description: "专业电焊设备 - 电焊设备及配件，适合金属加工和维修作业",
+                price: 680,
+                uploadTime: new Date('2025-02-10'),
+                sales: 67,
+                category: "焊接工具"
+            },
+            {
+                id: 12,
+                name: "氩弧焊机",
+                description: "高精度氩弧焊 - 不锈钢、铝合金焊接专用，焊缝美观",
+                price: 1250,
+                uploadTime: new Date('2025-02-05'),
+                sales: 34,
+                category: "焊接工具"
+            },
+            {
+                id: 13,
+                name: "电烙铁套装",
+                description: "精密电烙铁 - 电子维修专用，温控精准，多种烙铁头",
+                price: 89,
+                uploadTime: new Date('2025-02-11'),
+                sales: 267,
+                category: "焊接工具"
+            },
+            {
+                id: 14,
+                name: "焊接防护用品",
+                description: "焊接防护套装 - 面罩、手套、工作服，全方位安全保护",
+                price: 158,
+                uploadTime: new Date('2025-02-13'),
+                sales: 123,
+                category: "焊接工具"
+            },
+            
+            // 园艺工具类
+            {
+                id: 15,
+                name: "园艺工具套装",
+                description: "园艺工具套装 - 剪枝器、铲子、水壶等，让您的花园更加美丽",
+                price: 128,
+                uploadTime: new Date('2025-02-15'),
+                sales: 178,
+                category: "园艺工具"
+            },
+            {
+                id: 16,
+                name: "电动割草机",
+                description: "无线割草机 - 锂电池供电，轻便易用，草坪维护利器",
+                price: 435,
+                uploadTime: new Date('2025-02-07'),
+                sales: 98,
+                category: "园艺工具"
+            },
+            {
+                id: 17,
+                name: "高枝剪",
+                description: "伸缩高枝剪 - 可伸缩至3米，修剪高处枝条轻松便捷",
+                price: 186,
+                uploadTime: new Date('2025-02-09'),
+                sales: 87,
+                category: "园艺工具"
+            },
+            {
+                id: 18,
+                name: "喷雾器",
+                description: "电动喷雾器 - 农药喷洒、浇水两用，大容量水箱",
+                price: 234,
+                uploadTime: new Date('2025-02-17'),
+                sales: 112,
+                category: "园艺工具"
+            },
+            
+            // 汽修工具类
+            {
+                id: 19,
+                name: "汽修工具箱",
+                description: "专业汽修套装 - 套筒、扳手、起子等汽车维修专用工具",
+                price: 568,
+                uploadTime: new Date('2025-02-03'),
+                sales: 76,
+                category: "汽修工具"
+            },
+            {
+                id: 20,
+                name: "千斤顶",
+                description: "液压千斤顶 - 2吨承重，汽车维修举升专用，安全可靠",
+                price: 345,
+                uploadTime: new Date('2025-02-06'),
+                sales: 134,
+                category: "汽修工具"
+            },
+            {
+                id: 21,
+                name: "扭力扳手",
+                description: "精密扭力扳手 - 预设扭矩值，螺栓紧固标准化操作",
+                price: 298,
+                uploadTime: new Date('2025-02-04'),
+                sales: 89,
+                category: "汽修工具"
+            },
+            {
+                id: 22,
+                name: "汽车诊断仪",
+                description: "OBD诊断仪 - 故障码读取，发动机数据监测，维修必备",
+                price: 789,
+                uploadTime: new Date('2025-02-02'),
+                sales: 45,
+                category: "汽修工具"
+            },
+            
+            // 木工工具类
+            {
+                id: 23,
+                name: "木工凿子套装",
+                description: "精钢凿子 - 6、12、18、25mm多规格，木工雕刻专用",
+                price: 156,
+                uploadTime: new Date('2025-01-28'),
+                sales: 167,
+                category: "木工工具"
+            },
+            {
+                id: 24,
+                name: "木工锯子套装",
+                description: "手工锯套装 - 粗齿锯、细齿锯、曲线锯，木材切割全覆盖",
+                price: 198,
+                uploadTime: new Date('2025-01-30'),
+                sales: 145,
+                category: "木工工具"
+            },
+            {
+                id: 25,
+                name: "电动刨子",
+                description: "电动木工刨 - 可调刨削深度，木材表面平整处理",
+                price: 423,
+                uploadTime: new Date('2025-01-26'),
+                sales: 98,
+                category: "木工工具"
+            },
+            {
+                id: 26,
+                name: "木工夹具套装",
+                description: "F型夹具 - 多规格夹具，木材拼接固定专用",
+                price: 234,
+                uploadTime: new Date('2025-01-22'),
+                sales: 156,
+                category: "木工工具"
+            }
+        ];
+
+        // 语言包
+        const translations = {
+            zh: {
+                sort_title: "全部工具排序",
+                sort_time: "按上架时间",
+                sort_sales: "按销量排序",
+                latest_title: "最新上架工具",
+                login: "登录",
+                cart: "购物车",
+                add_to_cart: "加入购物车",
+                added: "已添加!",
+                login_title: "用户登录",
+                username: "用户名",
+                password: "密码",
+                username_placeholder: "请输入用户名",
+                password_placeholder: "请输入密码",
+                login_btn: "登录",
+                no_account: "没有账户？注册",
+                cart_empty: "购物车是空的",
+                total: "总计",
+                checkout: "立即结账",
+                remove: "删除",
+                cart_empty_msg: "购物车是空的！",
+                login_required: "请先登录再进行结账！",
+                thank_you: "感谢您的购买",
+                order_details: "订单详情",
+                total_amount: "总金额",
+                shipping_msg: "我们将尽快为您安排发货！",
+                welcome_back: "欢迎回来",
+                logout_success: "已成功登出！",
+                register_msg: "注册功能暂未开放，请使用任意用户名和密码进行登录体验！",
+                login_error: "请输入用户名和密码！"
+            },
+            en: {
+                sort_title: "Sort All Tools",
+                sort_time: "By Upload Time",
+                sort_sales: "By Sales",
+                latest_title: "Latest Tools",
+                login: "Login",
+                cart: "Cart",
+                add_to_cart: "Add to Cart",
+                added: "Added!",
+                login_title: "User Login",
+                username: "Username",
+                password: "Password",
+                username_placeholder: "Enter username",
+                password_placeholder: "Enter password",
+                login_btn: "Login",
+                no_account: "No account? Register",
+                cart_empty: "Cart is empty",
+                total: "Total",
+                checkout: "Checkout",
+                remove: "Remove",
+                cart_empty_msg: "Cart is empty!",
+                login_required: "Please login before checkout!",
+                thank_you: "Thank you for your purchase",
+                order_details: "Order Details",
+                total_amount: "Total Amount",
+                shipping_msg: "We will arrange shipping for you as soon as possible!",
+                welcome_back: "Welcome back",
+                logout_success: "Successfully logged out!",
+                register_msg: "Registration is not available yet. Please use any username and password to login!",
+                login_error: "Please enter username and password!"
+            }
+        };
+
+        // 当前排序方式
+        let currentSort = 'time';
+
+        // 购物车数据
+        let cart = [];
+        
+        // 用户登录状态
+        let isLoggedIn = false;
+        let currentUser = null;
+        
+        // 当前语言
+        let currentLanguage = 'zh';
+
+        // 管理后台数据
+        let adminUsers = [
+            { username: 'john_doe', registerTime: '2025-01-10', orders: 3, totalSpent: 856, status: '正常' },
+            { username: 'jane_smith', registerTime: '2025-01-15', orders: 7, totalSpent: 1245, status: '正常' },
+            { username: 'mike_wilson', registerTime: '2025-02-01', orders: 2, totalSpent: 432, status: '正常' },
+            { username: 'sarah_connor', registerTime: '2025-02-05', orders: 5, totalSpent: 789, status: '正常' }
+        ];
+
+        let adminOrders = [
+            { id: 'ORD001', user: 'john_doe', amount: 299, time: '2025-02-19 14:30', status: '已发货' },
+            { id: 'ORD002', user: 'jane_smith', amount: 567, time: '2025-02-19 16:45', status: '处理中' },
+            { id: 'ORD003', user: 'mike_wilson', amount: 188, time: '2025-02-18 09:15', status: '已完成' },
+            { id: 'ORD004', user: 'sarah_connor', amount: 423, time: '2025-02-18 11:20', status: '已发货' }
+        ];
+
+        // 渲染产品
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const t = translations[currentLanguage];
+            let sortedProducts = [...products];
+            
+            // 根据当前排序方式排序
+            if (currentSort === 'time') {
+                sortedProducts.sort((a, b) => b.uploadTime - a.uploadTime);
+            } else if (currentSort === 'sales') {
+                sortedProducts.sort((a, b) => b.sales - a.sales);
+            }
+            
+            grid.innerHTML = sortedProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-info">
+                        <div class="product-details">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-description">${product.description}</div>
+                        </div>
+                        <div class="product-price">${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            ${t.add_to_cart}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // 更新排序按钮文本
+            document.querySelector('.sort-btn[onclick="sortProducts(\'time\')"]').textContent = t.sort_time;
+            document.querySelector('.sort-btn[onclick="sortProducts(\'sales\')"]').textContent = t.sort_sales;
+        }
+
+        // 排序产品
+        function sortProducts(type) {
+            currentSort = type;
+            
+            // 更新按钮样式
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 重新渲染产品
+            renderProducts();
+        }
+
+        // 渲染最新上架工具
+        function renderLatestTools() {
+            const latestContainer = document.getElementById('latestTools');
+            
+            // 按上架时间排序，取最新3个
+            const latestProducts = [...products]
+                .sort((a, b) => b.uploadTime - a.uploadTime)
+                .slice(0, 3);
+            
+            latestContainer.innerHTML = latestProducts.map(product => `
+                <div class="latest-item">
+                    <div class="latest-item-info">
+                        <div class="latest-item-name">${product.name}</div>
+                        <div class="latest-item-date">${product.uploadTime.toLocaleDateString('zh-CN')}</div>
+                    </div>
+                    <div class="latest-item-price">${product.price}</div>
+                </div>
+            `).join('');
+        }
+
+        // 添加到购物车
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            const t = translations[currentLanguage];
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            updateCartUI();
+            
+            // 添加成功提示
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = t.added;
+            button.style.background = '#48bb78';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '#667eea';
+            }, 1000);
+        }
+
+        // 更新购物车UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            renderCartItems();
+            updateTotal();
+        }
+
+        // 渲染购物车商品
+        function renderCartItems() {
+            const cartItems = document.getElementById('cartItems');
+            const t = translations[currentLanguage];
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${t.cart_empty}</p>`;
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${item.id})">${t.remove}</button>
+                </div>
+            `).join('');
+        }
+
+        // 更新商品数量
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // 从购物车移除商品
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // 更新总价
+        function updateTotal() {
+            const totalAmount = document.getElementById('totalAmount');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalAmount.textContent = total;
+        }
+
+        // 切换购物车显示
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                renderCartItems();
+                updateTotal();
+            }
+        }
+
+        // 结账
+        function checkout() {
+            const t = translations[currentLanguage];
+            
+            if (cart.length === 0) {
+                alert(t.cart_empty_msg);
+                return;
+            }
+            
+            if (!isLoggedIn) {
+                alert(t.login_required);
+                toggleLogin();
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemsList = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
+            
+            alert(`${t.thank_you}，${currentUser}！\n\n${t.order_details}：\n${itemsList}\n\n${t.total_amount}：${total}\n\n${t.shipping_msg}`);
+            
+            // 清空购物车
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // 切换登录弹窗
+        function toggleLogin() {
+            const modal = document.getElementById('loginModal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+            }
+        }
+
+        // 处理登录
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const t = translations[currentLanguage];
+            
+            // 简单的登录验证（实际项目中应该连接后端API）
+            if (username && password) {
+                isLoggedIn = true;
+                currentUser = username;
+                
+                // 更新登录按钮
+                const loginBtn = document.getElementById('loginBtn');
+                loginBtn.textContent = `👤 ${username}`;
+                loginBtn.classList.add('logged-in');
+                loginBtn.onclick = logout;
+                
+                alert(`${t.welcome_back}，${username}！`);
+                toggleLogin();
+                
+                // 清空表单
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                alert(t.login_error);
+            }
+        }
+
+        // 登出
+        function logout() {
+            const t = translations[currentLanguage];
+            isLoggedIn = false;
+            currentUser = null;
+            
+            // 恢复登录按钮
+            const loginBtn = document.getElementById('loginBtn');
+            loginBtn.textContent = `👤 ${t.login}`;
+            loginBtn.classList.remove('logged-in');
+            loginBtn.onclick = toggleLogin;
+            
+            alert(t.logout_success);
+        }
+
+        // 显示注册（暂时只是提示）
+        function showRegister() {
+            alert(translations[currentLanguage].register_msg);
+        }
+
+        // 管理后台功能
+        function toggleAdmin() {
+            const modal = document.getElementById('adminModal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                showAdminTab('products');
+            }
+        }
+
+        function showAdminTab(tab) {
+            // 切换标签样式
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 切换面板显示
+            document.querySelectorAll('.admin-panel').forEach(p => p.style.display = 'none');
+            document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'block';
+            
+            // 根据标签加载数据
+            if (tab === 'products') {
+                renderAdminProducts();
+            } else if (tab === 'users') {
+                renderAdminUsers();
+            } else if (tab === 'orders') {
+                renderAdminOrders();
+            }
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('adminProductsList');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.sales}</td>
+                    <td>${product.category}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editProduct(${product.id})">编辑</button>
+                        <button class="delete-btn" onclick="deleteProduct(${product.id})">删除</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminUsers() {
+            const tbody = document.getElementById('adminUsersList');
+            tbody.innerHTML = adminUsers.map(user => `
+                <tr>
+                    <td>${user.username}</td>
+                    <td>${user.registerTime}</td>
+                    <td>${user.orders}</td>
+                    <td>${user.totalSpent}</td>
+                    <td>${user.status}</td>
+                    <td>
+                        <button class="view-btn" onclick="viewUser('${user.username}')">查看</button>
+                        <button class="edit-btn" onclick="editUser('${user.username}')">编辑</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersList');
+            tbody.innerHTML = adminOrders.map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.user}</td>
+                    <td>${order.amount}</td>
+                    <td>${order.time}</td>
+                    <td>${order.status}</td>
+                    <td>
+                        <button class="view-btn" onclick="viewOrder('${order.id}')">查看</button>
+                        <button class="edit-btn" onclick="editOrder('${order.id}')">编辑</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddProduct() {
+            document.getElementById('addProductModal').style.display = 'block';
+        }
+
+        function closeAddProduct() {
+            document.getElementById('addProductModal').style.display = 'none';
+            // 清空表单
+            document.querySelector('.add-product-form').reset();
+        }
+
+        function addNewProduct(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const description = document.getElementById('productDescription').value;
+            const category = document.getElementById('productCategory').value;
+            const sales = parseInt(document.getElementById('productSales').value) || 0;
+            
+            // 生成新ID
+            const newId = Math.max(...products.map(p => p.id)) + 1;
+            
+            // 创建新产品
+            const newProduct = {
+                id: newId,
+                name: name,
+                description: description,
+                price: price,
+                uploadTime: new Date(),
+                sales: sales,
+                category: category
+            };
+            
+            // 添加到产品数组
+            products.push(newProduct);
+            
+            // 更新显示
+            renderProducts();
+            renderLatestTools();
+            renderAdminProducts();
+            
+            // 关闭弹窗
+            closeAddProduct();
+            
+            alert('产品添加成功！');
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                const newName = prompt('产品名称:', product.name);
+                const newPrice = prompt('价格:', product.price);
+                const newDescription = prompt('描述:', product.description);
+                
+                if (newName && newPrice && newDescription) {
+                    product.name = newName;
+                    product.price = parseFloat(newPrice);
+                    product.description = newDescription;
+                    
+                    renderProducts();
+                    renderLatestTools();
+                    renderAdminProducts();
+                    alert('产品更新成功！');
+                }
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('确定要删除这个产品吗？')) {
+                const index = products.findIndex(p => p.id === id);
+                if (index > -1) {
+                    products.splice(index, 1);
+                    renderProducts();
+                    renderLatestTools();
+                    renderAdminProducts();
+                    alert('产品删除成功！');
+                }
+            }
+        }
+
+        function viewUser(username) {
+            const user = adminUsers.find(u => u.username === username);
+            if (user) {
+                alert(`用户详情：\n用户名: ${user.username}\n注册时间: ${user.registerTime}\n订单数: ${user.orders}\n总消费: ${user.totalSpent}\n状态: ${user.status}`);
+            }
+        }
+
+        function editUser(username) {
+            alert('用户编辑功能开发中...');
+        }
+
+        function viewOrder(orderId) {
+            const order = adminOrders.find(o => o.id === orderId);
+            if (order) {
+                alert(`订单详情：\n订单号: ${order.id}\n用户: ${order.user}\n金额: ${order.amount}\n时间: ${order.time}\n状态: ${order.status}`);
+            }
+        }
+
+        function editOrder(orderId) {
+            const order = adminOrders.find(o => o.id === orderId);
+            if (order) {
+                const newStatus = prompt('订单状态:', order.status);
+                if (newStatus) {
+                    order.status = newStatus;
+                    renderAdminOrders();
+                    alert('订单状态更新成功！');
+                }
+            }
+        }
+
+        // 切换语言
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // 更新按钮样式
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(lang + 'Btn').classList.add('active');
+            
+            // 更新页面文本
+            updatePageLanguage();
+        }
+
+        // 更新页面语言
+        function updatePageLanguage() {
+            const t = translations[currentLanguage];
+            
+            // 更新控制面板
+            document.querySelector('.sort-module h3').textContent = t.sort_title;
+            document.querySelector('.latest-module h3').textContent = t.latest_title;
+            
+            // 更新按钮文本
+            if (!isLoggedIn) {
+                document.getElementById('loginBtn').textContent = `👤 ${t.login}`;
+            }
+            
+            // 重新渲染产品和最新工具
+            renderProducts();
+            renderLatestTools();
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleLogin();
+            }
+        });
+
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePayment();
+            }
+        });
+
+        document.getElementById('adminModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleAdmin();
+            }
+        });
+
+        document.getElementById('addProductModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddProduct();
+            }
+        });
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            renderLatestTools();
+            updateCartUI();
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
